@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const UserInfo = () => {
@@ -15,7 +15,9 @@ export const UserInfo = () => {
         dropOff:"",
         rentPrice:"",
         insurance:"",
-        totalPrice:""
+        totalPrice:"",
+        // pickUpTime:"",
+        // dropOffTime:"",
 
     });
 
@@ -28,8 +30,52 @@ export const UserInfo = () => {
         }));
     };
 
+    const [checkbox,setCheckbox] = useState(false);
+     const handleCheckbox = (e) => {
+    setCheckbox(e.target.checked);
+  };
 
+    const totalCarPrice= () => {
+      
+        if(checkbox === false){
+            const carPriceGet = car.perDayRental;
+            const start = new Date(formData.pickUp);
+            const end = new Date(formData.dropOff);
+            const numOfDays = (end - start)/ (1000*60*60*24);
+            const PriceWithOutWaiver = carPriceGet * numOfDays;
+            console.log(numOfDays)
+            console.log(PriceWithOutWaiver)
+            return(PriceWithOutWaiver);
+    
+        }
+        else{
+            const carPriceGet = car.perDayRental;
+            const start = new Date(formData.pickUp);
+            const end = new Date(formData.dropOff);
+            const numOfDays = (end - start)/ (1000*60*60*24);
+            const PriceWithOutWaiver = carPriceGet * numOfDays;
+            const PriceWithWaiver = (numOfDays * 15000) + PriceWithOutWaiver
+            console.log(numOfDays)
+            console.log(PriceWithWaiver)
+            return (PriceWithWaiver)
+        }
+        
+    }
 
+    //  useEffect(()=>{ totalCarPrice()
+     
+    //  }, handleCheckbox)
+   
+
+    const totalInsurance=() =>{
+        const perDayInsurance = 15000;
+        const start = new Date(formData.pickUp);
+        const end = new Date(formData.dropOff);
+        const numOfDays = (end - start)/ (1000*60*60*24);
+        const TotalInsurance = (perDayInsurance * numOfDays);
+        console.log(TotalInsurance);
+        return(TotalInsurance);
+    }
     const handleSubmitForm = async (e) => {
         e.preventDefault();
 
@@ -40,9 +86,11 @@ export const UserInfo = () => {
             driverLicense: formData.driverLicense,
             pickUp:formData.pickUp,
             dropOff:formData.dropOff,
-            rentPrice:formData.rentPrice,
-            insurance:formData.insurance,
-            totalPrice:formData.totalPrice,
+            rentPrice:car.perDayRental,
+            insurance:totalInsurance(),
+            totalPrice:totalCarPrice(),
+            // pickUpTime:formData.pickUpTime,
+            // dropOffTime:formData.dropOffTime,
         };
         console.log(newUserInfo)
         const response = await fetch(`http://localhost:8080/roadrunner/userinfo/post` , {
@@ -101,27 +149,46 @@ export const UserInfo = () => {
         <br/>
         <br/>
 
+        <label>Damage Waiver </label>
+        <br/>
+        <input type='checkbox' name='checkbox' value={totalCarPrice()} onClick={handleCheckbox} />
+        <br/>
+        <br/>
+
         <br/>
         {/* <input type='readonly'/> */}
         <br/>
         <br/>
 
 
-        {/* <label> Total Price:</label>
+         <label> Price per Day:</label>
         <br/>
-        <input value={numOfNightsPrice()} readOnly/>
+        <input value={car.perDayRental} readOnly/>
         <br/>
         <br/>
 
-        <label>Sub Total with Tax:{subTotal}</label>
+
+        <label> Total Insurance:</label>
         <br/>
-        <input value={TaxPrice()} readOnly/>
+        <input name='insurance' value={totalInsurance()} onClick={handleCheckbox} readOnly/>
+        <br/>
+        <br/>
+
+        {/* <label> Waiver per Day:</label>
+        <br/>
+        <input value={totalCarPrice()} onClick={handleCheckbox} readOnly/>
         <br/>
         <br/> */}
+
+        <label> Total Price with:</label>
+        <br/>
+        <input value={totalCarPrice()} onClick={handleCheckbox} readOnly/>
+        <br/>
+        <br/>
+
         <input type='submit'/>
         </form>
-        
-        
+                
     </div>
     
     </div>
