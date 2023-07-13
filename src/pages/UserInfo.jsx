@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './UserInfo.css';
 
 export const UserInfo = () => {
     const naviagte=useNavigate();
@@ -111,10 +112,10 @@ export const UserInfo = () => {
 
   return (
     <div className='userInfoPage'> 
-    <h3>UserInfo</h3>
+    
     
     <div>
-        <h1>Confirmation</h1>
+        <h1>UserInfo</h1>
           
         <form onSubmit={handleSubmitForm}>
         <label>Name</label>
@@ -191,6 +192,7 @@ export const UserInfo = () => {
         <br/>
 
         <button onClick={()=>naviagte('/')}>Change my Car</button>
+        <br></br>
         <input type='submit' class='Checkout' value='Checkout'/>
         </form>
                 

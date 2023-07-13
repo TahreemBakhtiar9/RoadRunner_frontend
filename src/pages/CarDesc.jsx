@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
+import './CarDesc.css';
 
 export const CarDesc = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const CarDesc = () => {
 
     <div className='cardesc'>
         <h4><b> {car.name}</b></h4>
-        <p><b> {car.perDayRental}</b></p>
+        <p><b> Rs: {car.perDayRental}</b></p>
         <p>{car.longDesc}</p>
     </div>
 
