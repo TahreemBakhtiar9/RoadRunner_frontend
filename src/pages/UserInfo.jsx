@@ -103,6 +103,7 @@ export const UserInfo = () => {
         })
         if(response.ok){
             console.log("Data save hogya!")
+            localStorage.setItem("data", JSON.stringify(newUserInfo));
 
         }
         naviagte('/checkout')
