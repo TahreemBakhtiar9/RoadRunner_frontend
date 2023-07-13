@@ -2,6 +2,9 @@ import React from 'react'
 
 export const Checkout = () => {
   return (
-    <div>Checkout</div>
+    <div>
+        <p> Thank you </p>
+
+        </div>
   )
 }
