@@ -11,13 +11,14 @@ export const Car = (props) => {
         <div className='carimg'>
             <img src={imgLink}/>
             
-        </div>
+        
         <div className='desc'>
             <Link to={`/car/${id}`}>
         <p><b>{name}</b></p>
         </Link>
         <p>{shortDesc}</p>
         <p>Rs: {perDayRental}/-</p>
+        </div>
         </div>
     </div>
   )

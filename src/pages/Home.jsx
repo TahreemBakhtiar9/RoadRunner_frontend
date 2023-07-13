@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import {Car} from './Car'
+import './Home.css'
 
 export const Home = () => {
     const [cars, setCars] = useState([])
