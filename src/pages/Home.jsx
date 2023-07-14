@@ -18,8 +18,7 @@ export const Home = () => {
 
   return (
     <div className='home'>
-        <h1> RoadRunner</h1>
-        <h3>Home</h3>
+        <h1> RoadRunner Rental Car</h1>
         
         <div className='cars'>
         {

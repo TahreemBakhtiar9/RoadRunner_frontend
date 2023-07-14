@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './UserInfo.css';
 
@@ -8,20 +8,28 @@ export const UserInfo = () => {
     let car = state.car;
     console.log({perDayRental: car.perDayRental})
 
-    const[formData,setFormData] = useState({
-        name:"",
-        address:"",
-        phoneNo:"",
-        driverLicense:"",
-        pickUp:"",
-        dropOff:"",
-        rentPrice:"",
-        insurance:"",
-        totalPrice:"",
-        // pickUpTime:"",
-        // dropOffTime:"",
 
-    });
+    const [formData, setFormData] = useState(() => {
+        const localStored = JSON.parse(localStorage.getItem("confirmationData"));
+        return localStored || {
+            name:"",
+            address:"",
+            phoneNo:"",
+            driverLicense:"",
+            pickUp:"",
+            dropOff:"",
+            rentPrice:"",
+            insurance:"",
+            totalPrice:"",
+        };
+      });
+
+    // const[formData,setFormData] = useState({
+        
+        // // pickUpTime:"",
+        // // dropOffTime:"",
+
+    // });
 
 
     const {name,address,phoneNo,driverLicense,pickUp,dropOff,rentPrice,insurance,totalPrice} = formData;
@@ -104,11 +112,19 @@ export const UserInfo = () => {
         })
         if(response.ok){
             console.log("Data save hogya!")
-            localStorage.setItem("data", JSON.stringify(newUserInfo));
-
+            localStorage.removeItem("Confirmed!");
         }
         naviagte('/checkout')
     }
+
+
+
+    useEffect(() => {
+        localStorage.setItem("confirmationData", JSON.stringify(formData));
+      }, [formData]);
+
+
+
 
   return (
     <div className='userInfoPage'> 

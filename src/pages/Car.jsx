@@ -4,10 +4,10 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 export const Car = (props) => {
-    const { id, name, shortDesc, longDesc, imgLink,perDayRental} =props.data;
+    const { id, name, shortDesc, longDesc, imgLink,perDayRental} =props.data
 
   return (
-    <div className='car'>
+    <div className='car' data-testid="car-component">
         <div className='carimg'>
             <img src={imgLink}/>
             
