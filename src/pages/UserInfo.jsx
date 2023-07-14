@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './UserInfo.css';
 
 export const UserInfo = () => {
     const naviagte=useNavigate();
+    const {id}=useParams();
     const {state} = useLocation();
-    let car = state.car;
-    console.log({perDayRental: car.perDayRental})
+    const[user,setuser]=useState("");
+    console.log(user.perDayRental);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/roadrunner/cars/get/${id}`)
+        .then((response) => response.json())
+        .then((data) =>{setuser(data)})
+        .catch((error) => console.error('Error: ', error));
+
+    }, []);
 
 
     const [formData, setFormData] = useState(() => {
@@ -23,15 +32,6 @@ export const UserInfo = () => {
             totalPrice:"",
         };
       });
-
-    // const[formData,setFormData] = useState({
-        
-        // // pickUpTime:"",
-        // // dropOffTime:"",
-
-    // });
-
-
     const {name,address,phoneNo,driverLicense,pickUp,dropOff,rentPrice,insurance,totalPrice} = formData;
     const handleInputChange=(e) => {
         const {name,value} = e.target;
@@ -48,7 +48,7 @@ export const UserInfo = () => {
     const totalCarPrice= () => {
       
         if(checkbox === false){
-            const carPriceGet = car.perDayRental;
+            const carPriceGet = user.perDayRental;
             const start = new Date(formData.pickUp);
             const end = new Date(formData.dropOff);
             const numOfDays = (end - start)/ (1000*60*60*24);
@@ -59,7 +59,7 @@ export const UserInfo = () => {
     
         }
         else{
-            const carPriceGet = car.perDayRental;
+            const carPriceGet = user.perDayRental;
             const start = new Date(formData.pickUp);
             const end = new Date(formData.dropOff);
             const numOfDays = (end - start)/ (1000*60*60*24);
@@ -72,10 +72,6 @@ export const UserInfo = () => {
         
     }
 
-    //  useEffect(()=>{ totalCarPrice()
-     
-    //  }, handleCheckbox)
-   
 
     const totalInsurance=() =>{
         const perDayInsurance = 15000;
@@ -96,7 +92,7 @@ export const UserInfo = () => {
             driverLicense: formData.driverLicense,
             pickUp:formData.pickUp,
             dropOff:formData.dropOff,
-            rentPrice:car.perDayRental,
+            rentPrice:user.perDayRental,
             insurance:totalInsurance(),
             totalPrice:totalCarPrice(),
             // pickUpTime:formData.pickUpTime,
@@ -136,43 +132,43 @@ export const UserInfo = () => {
         <form onSubmit={handleSubmitForm}>
         <label>Name</label>
         <br/>
-        <input type='text' name='name' value={name} onChange={handleInputChange}/>
+        <input type='text' name='name' data-testId="name" value={name} onChange={handleInputChange}/>
         <br/>
         <br/>
 
         <label>Phone Number: </label>
         <br/>
-        <input type='text' name='phoneNo' value={phoneNo} onChange={handleInputChange}/>
+        <input type='text' name='phoneNo' data-testId="phone" value={phoneNo} onChange={handleInputChange}/>
         <br/>
         <br/>
 
         <label>Address</label>
         <br/>
-        <input type='text' name='address' value={address} onChange={handleInputChange} />
+        <input type='text' name='address' data-testId="address" value={address} onChange={handleInputChange} />
         <br/>
         <br/>
 
         <label>Driver's License: </label>
         <br/>
-        <input type='text' name='driverLicense' value={driverLicense} onChange={handleInputChange} />
+        <input type='text' name='driverLicense' data-testId="driving" value={driverLicense} onChange={handleInputChange} />
         <br/>
         <br/>
 
         <label>PickUp Date</label>
         <br/>
-        <input type='datetime-local' name='pickUp' value={pickUp} onChange={handleInputChange}/>
+        <input type='datetime-local' name='pickUp' data-testId="pickUp" value={pickUp} onChange={handleInputChange}/>
         <br/>
         <br/>
 
         <label>DropOff Date</label>
         <br/>
-        <input type='datetime-local' name='dropOff' value={dropOff} onChange={handleInputChange}/>
+        <input type='datetime-local' name='dropOff' data-testId="dropOff" value={dropOff} onChange={handleInputChange}/>
         <br/>
         <br/>
 
         <label>Damage Waiver </label>
         <br/>
-        <input type='checkbox' name='checkbox' value={totalCarPrice()} onClick={handleCheckbox} />
+        <input type='checkbox' name='checkbox' data-testId="box" value={totalCarPrice()} onClick={handleCheckbox} />
         <br/>
         <br/>
 
@@ -184,14 +180,14 @@ export const UserInfo = () => {
 
          <label> Price per Day:</label>
         <br/>
-        <input value={car.perDayRental} readOnly/>
+        <input data-testId="perday" value={user.perDayRental} readOnly/>
         <br/>
         <br/>
 
 
         <label> Total Insurance:</label>
         <br/>
-        <input name='insurance' value={totalInsurance()} onClick={handleCheckbox} readOnly/>
+        <input name='insurance' data-testId="total"value={totalInsurance()} onClick={handleCheckbox} readOnly/>
         <br/>
         <br/>
 
@@ -203,13 +199,13 @@ export const UserInfo = () => {
 
         <label> Total Price with:</label>
         <br/>
-        <input value={totalCarPrice()} onClick={handleCheckbox} readOnly/>
+        <input value={totalCarPrice()} data-testId="totalprice" onClick={handleCheckbox} readOnly/>
         <br/>
         <br/>
 
         <button onClick={()=>naviagte('/')}>Change my Car</button>
         <br></br>
-        <input type='submit' class='Checkout' value='Checkout'/>
+        <input type='submit' class='Checkout' data-testId="submit" value='Checkout'/>
         </form>
                 
     </div>

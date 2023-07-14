@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import {Car} from './Car'
-import './Home.css'
+import { Car } from './Car';
+import './Home.css';
 
 export const Home = () => {
     const [cars, setCars] = useState([])
@@ -18,15 +18,17 @@ export const Home = () => {
 
   return (
     <div className='home'>
-        <h1> RoadRunner Rental Car</h1>
+        <h1 data-testId="heading"> RoadRunner Rental Car</h1>
         
         <div className='cars'>
         {
             cars.map((car) => (
-             <Car key={car.id} data={car}/>   
+             <Car data-testId='cars' key={car.id} data={car}/>   
             ))
         }
         </div>
         </div>
   )
 }
+
+

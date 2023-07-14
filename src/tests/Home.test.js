@@ -1,10 +1,10 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { Home } from '../pages/Home';
+import { Home } from './../pages/Home';
+describe('Home', () => {
+  test('renders the component without errors', async () => {
+    render(<Home />);
+    expect(screen.getByTestId('heading')).toBeTruthy();
+  });
 
-
-test("renders Home page",() => {
-  render(<Home/>)
-  expect(screen.getByText("RoadRunner Rental Car")).toBeInTheDocument();
-})
+});

@@ -1,5 +1,5 @@
-import React,{useEffect, useState} from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './CarDesc.css';
 
 export const CarDesc = () => {
@@ -23,9 +23,9 @@ export const CarDesc = () => {
     </div>
 
     <div className='cardesc'>
-        <h4><b> {car.name}</b></h4>
-        <p><b> Rs: {car.perDayRental}</b></p>
-        <p>{car.longDesc}</p>
+        <h4 data-testId="carname"><b> {car.name}</b></h4>
+        <p data-testId="carrental"><b> Rs: {car.perDayRental}</b></p>
+        <p data-testId="cardesc">{car.longDesc}</p>
     </div>
 
     <div className='rentMeBttn'>

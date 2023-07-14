@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {Checkout} from '../pages/Checkout';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { render, screen} from '@testing-library/react';
+import { Checkout } from '../pages/Checkout';
 
 test("renders confirmation page",() => {
     render(<Checkout/>)
